@@ -7,6 +7,8 @@ export async function POST(req) {
     const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD ;
     console.log("ADMIN_PASSWORD exists:", !!ADMIN_PASSWORD);
     console.log("Password length:", ADMIN_PASSWORD?.length);
+    console.log("Received password length:", password?.length);
+    console.log("Password match:", password === ADMIN_PASSWORD);
 
     if (password !== ADMIN_PASSWORD) {
       return NextResponse.json({ error: "Invalid password" }, { status: 401 });
