@@ -1,12 +1,17 @@
 import { NextResponse } from "next/server";
 import { jwtVerify } from "jose";
 
-const SECRET = new TextEncoder().encode(
-  process.env.JWT_SECRET ||
-  "dws-fallback-secret-change-in-production-32ch"
-);
-
 export async function middleware(req) {
+  const pathname = req.nextUrl.pathname;
+
+  // Allow these routes without authentication
+  if (
+    pathname === "/api/admin/login" ||
+    pathname === "/api/admin/session"
+  ) {
+    return NextResponse.next();
+  }
+
   const token = req.cookies.get("dws_admin")?.value;
 
   if (!token) {
@@ -17,7 +22,11 @@ export async function middleware(req) {
   }
 
   try {
-    await jwtVerify(token, SECRET);
+    await jwtVerify(
+      token,
+      new TextEncoder().encode(process.env.JWT_SECRET)
+    );
+
     return NextResponse.next();
   } catch {
     return NextResponse.json(
@@ -28,5 +37,11 @@ export async function middleware(req) {
 }
 
 export const config = {
-  matcher: ["/api/admin/:path*"],
+  matcher: [
+    "/api/admin/transactions/:path*",
+    "/api/admin/messages/:path*",
+    "/api/admin/brands/:path*",
+    "/api/admin/visits/:path*",
+    "/api/admin/logout/:path*",
+  ],
 };
