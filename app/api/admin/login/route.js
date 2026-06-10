@@ -11,16 +11,14 @@ export async function POST(req) {
     }
 
     const token = await createToken();
-
     const res = NextResponse.json({ ok: true });
     res.cookies.set("dws_admin", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
-      maxAge: 60 * 60 * 12, // 12 hours
+      maxAge: 60 * 60 * 12,
       path: "/",
     });
-
     return res;
   } catch (err) {
     console.error("Login error:", err);
