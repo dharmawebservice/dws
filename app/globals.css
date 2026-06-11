@@ -408,3 +408,9 @@ body {
 }
 [data-theme="dark"] .brand-card img { filter: brightness(0.85) contrast(1.1); }
 [data-theme="dark"] .brand-card:hover img { filter: brightness(1.1) contrast(1); }
+
+  .sm\:py-28 {
+    @media (width >= 40rem) {
+      padding-block: calc(var(--spacing) * 15);
+    }
+  }

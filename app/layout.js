@@ -20,7 +20,7 @@ export const metadata = {
   openGraph: {
     title: "Dharma Web Services",
     description: "Premium websites that convert. Built in India.",
-    url: "https://dws.monster",
+    url: "https://dharmawebservice.in",
     siteName: "DWS",
     type: "website",
     images: [{ url: "/dws-logo-dark.png", width: 1024, height: 1024 }],

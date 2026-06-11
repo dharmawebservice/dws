@@ -157,39 +157,89 @@ export default function Hero() {
                       <div key={i} className="w-3 h-3 rounded-full" style={{ background: c }} />
                     ))}
                     <div className="ml-2 flex-1 rounded-md px-3 py-1 text-xs" style={{ background: "var(--surface-3)", color: "var(--text-muted)", border: "1px solid var(--border)" }}>
-                      dws.monster
+                      dharmawebservice.in
                     </div>
                   </div>
                   {/* Logo showcase */}
-                  <div className="flex flex-col items-center justify-center py-8 px-6 gap-4">
+                  <div className="flex flex-col items-center justify-center py-4 px-6">
                     <img
                       src={isDark ? "/dws-logo-dark.png" : "/dws-logo-light.png"}
                       alt="DWS"
-                      className="w-32 h-32 sm:w-40 sm:h-40 object-contain"
-                      style={{ filter: "drop-shadow(0 0 28px rgba(212,175,55,0.40))" }}
+                      className="w-52 h-52 sm:w-64 sm:h-64 object-contain"
+                      style={{
+                        filter: "drop-shadow(0 0 28px rgba(212,175,55,0.40))",
+                        marginBottom: "-55px",
+                      }}
                     />
-                    <p className="text-xs tracking-widest uppercase font-semibold" style={{ color: "#d4af37" }}>Dharma Web Services</p>
-                    <div className="grid grid-cols-3 gap-3 w-full mt-1">
-                      {[["85", "Design"], ["92", "Speed"], ["97", "SEO"]].map(([n, label], i) => (
-                        <div key={i} className="rounded-xl p-3 text-center" style={{ border: "1px solid var(--border)", background: "rgba(212,175,55,0.04)" }}>
-                          <div className="text-xl font-bold gradient-text">{n}</div>
-                          <div className="text-[0.65rem] mt-0.5" style={{ color: "var(--text-muted)" }}>{label}</div>
-                        </div>
-                      ))}
-                    </div>
+                    <div
+  className="absolute"
+  style={{
+    width: "180px",
+    height: "180px",
+    borderRadius: "50%",
+    background:
+      "radial-gradient(circle, rgba(212,175,55,0.08) 0%, transparent 70%)",
+    filter: "blur(40px)",
+    zIndex: -1,
+  }}
+/>
+                    <p
+  className="text-sm tracking-[0.32em] uppercase font-semibold text-center"
+  style={{ color: "#d4af37" }}
+>
+  DHARMA WEB SERVICES
+</p>
+
+<div className="flex items-center justify-center mt-4 w-full">
+  <div
+    className="flex-1 max-w-[70px] h-px"
+    style={{ background: "rgba(212,175,55,0.35)" }}
+  />
+
+  <span
+    className="mx-4 text-[11px] tracking-[0.14em] uppercase whitespace-nowrap"
+    style={{ color: "var(--text-secondary)" }}
+  >
+    BUILD • INNOVATE • ELEVATE
+  </span>
+
+  <div
+    className="flex-1 max-w-[70px] h-px"
+    style={{ background: "rgba(212,175,55,0.35)" }}
+  />
+</div>
+
+<div className="flex flex-wrap justify-center gap-3 mt-6">
+  {[
+    "Web Design",
+    "SEO",
+    "Branding",
+    "Automation",
+  ].map((item) => (
+    <div
+      key={item}
+      className="px-3 py-1 rounded-full"
+      style={{
+        border: "1px solid rgba(212,175,55,0.18)",
+        background: "rgba(212,175,55,0.05)",
+      }}
+    >
+      <span
+        className="text-[10px] tracking-wide"
+        style={{ color: "var(--text-secondary)" }}
+      >
+        {item}
+      </span>
+    </div>
+  ))}
+</div>
+                    
                   </div>
                 </div>
               </div>
               {/* Floating chips */}
               <div className="hidden lg:flex animate-float-slow absolute -left-10 top-16 glass-card px-3 py-2 items-center gap-2 text-xs font-medium whitespace-nowrap">
                 <span>⚡</span><span style={{ color: "#f0d060" }}>0.8s Load Time</span>
-              </div>
-              <div className="hidden lg:flex animate-float-slower absolute -right-8 bottom-28 glass-card px-3 py-2 items-center gap-2 text-xs font-medium whitespace-nowrap">
-                <span>✨</span>
-                <span style={{ color: "#c0c8d8" }}>Premium UI</span>
-              </div>
-              <div className="animate-float absolute right-3 top-4 glass-card px-2.5 py-1.5 flex items-center gap-1.5 text-xs font-medium whitespace-nowrap">
-                <span className="text-green-500">●</span><span style={{ color: "var(--text-secondary)" }}>Live</span>
               </div>
             </div>
           </div>
