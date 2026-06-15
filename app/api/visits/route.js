@@ -1,62 +1,54 @@
 import { NextResponse } from "next/server";
 import { getServiceClient } from "../../../lib/supabase";
 
+export const dynamic = "force-dynamic";
+
 export async function POST(req) {
   try {
     const supabase = getServiceClient();
+    const { page } = await req.json();
 
-    const body = await req.json();
+    const forwarded = req.headers.get("x-forwarded-for");
+    const ip = forwarded ? forwarded.split(",")[0].trim() : "unknown";
+    const userAgent = req.headers.get("user-agent") || "";
+    const today = new Date().toISOString().split("T")[0];
 
-    const page = body.page || "/";
-
-    const forwarded =
-      req.headers.get("x-forwarded-for");
-
-    const ip =
-      forwarded?.split(",")[0] ||
-      req.headers.get("x-real-ip") ||
-      "unknown";
-
-    const userAgent =
-      req.headers.get("user-agent") || "";
-
-    const today =
-      new Date().toISOString().split("T")[0];
-
-    const { data } = await supabase
+    const { error: insertError } = await supabase
       .from("page_visits")
-      .select("*")
-      .eq("visitor_ip", ip)
-      .eq("visit_date", today)
-      .eq("page_path", page)
-      .maybeSingle();
+      .insert([
+        {
+          visitor_ip: ip,
+          visit_date: today,
+          page_path: page || "/",
+          user_agent: userAgent,
+          hit_count: 1,
+        },
+      ]);
 
-    if (data) {
-      await supabase
-        .from("page_visits")
-        .update({
-          hit_count: data.hit_count + 1,
-        })
-        .eq("id", data.id);
-    } else {
-      await supabase
-        .from("page_visits")
-        .insert([
-          {
-            visitor_ip: ip,
-            page_path: page,
-            user_agent: userAgent,
-          },
-        ]);
+    if (insertError) {
+      if (insertError.code === "23505") {
+        const { data: existing } = await supabase
+          .from("page_visits")
+          .select("id, hit_count")
+          .eq("visitor_ip", ip)
+          .eq("visit_date", today)
+          .eq("page_path", page || "/")
+          .single();
+
+        if (existing) {
+          await supabase
+            .from("page_visits")
+            .update({ hit_count: (existing.hit_count || 1) + 1 })
+            .eq("id", existing.id);
+        }
+      } else {
+        console.error("Visit insert error:", insertError);
+      }
     }
 
     return NextResponse.json({ ok: true });
-
   } catch (err) {
-    console.error(err);
-
-    return NextResponse.json(
-      { ok: true }
-    );
+    console.error("Visit tracking error:", err);
+    return NextResponse.json({ ok: false }, { status: 200 });
   }
 }

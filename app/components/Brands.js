@@ -1,3 +1,4 @@
+import { createClient } from "@supabase/supabase-js";
 import BrandCard from "./BrandCard";
 
 const FALLBACK_BRANDS = [
@@ -9,18 +10,23 @@ const FALLBACK_BRANDS = [
 
 async function getBrands() {
   try {
-    const baseUrl =
-      process.env.NEXT_PUBLIC_BASE_URL ||
-      (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL,
+      process.env.SUPABASE_SERVICE_ROLE_KEY
+    );
 
-    const res = await fetch(`${baseUrl}/api/brands`, {
-      cache: "no-store",
-    });
+    const { data, error } = await supabase
+      .from("brands")
+      .select("id, name, logo_url, website_url, display_order")
+      .eq("active", true)
+      .order("display_order");
 
-    if (!res.ok) return FALLBACK_BRANDS;
+    if (error) {
+      console.error("Brands fetch error:", error.message);
+      return FALLBACK_BRANDS;
+    }
 
-    const data = await res.json();
-    if (!Array.isArray(data) || data.length === 0) return FALLBACK_BRANDS;
+    if (!data || data.length === 0) return FALLBACK_BRANDS;
 
     return data;
   } catch (err) {
@@ -33,7 +39,6 @@ export default async function Brands() {
   const brands = await getBrands();
 
   const row1 = [...brands, ...brands, ...brands, ...brands];
-  const row2 = [...brands, ...brands, ...brands, ...brands].reverse();
 
   return (
     <section id="brands" className="py-20 sm:py-28 relative overflow-hidden">

@@ -54,7 +54,7 @@ export default function Pricing() {
             >
               {badge && (
                 <div
-                  className={`absolute -top-3.5 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap ${
+                  className={`absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap ${
                     popular ? "gradient-btn" : ""
                   }`}
                   style={popular ? { color: "#080808" } : { background: "rgba(212,175,55,0.12)", color: "#d4af37", border: "1px solid rgba(212,175,55,0.30)" }}

@@ -478,8 +478,7 @@ function TransactionsTab() {
       {/* Modal */}
       {showForm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4"
-             style={{ background: "rgba(0,0,0,0.75)", backdropFilter: "blur(6px)" }}
-             onClick={closeForm}>
+     style={{ background: "rgba(0,0,0,0.75)", backdropFilter: "blur(6px)" }}>
           <div className="w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-2xl border p-6"
                style={{ background: "#13131f", borderColor: "rgba(255,255,255,0.1)" }}
                onClick={e => e.stopPropagation()}>
@@ -665,8 +664,7 @@ function BrandsTab() {
 
       {showForm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4"
-             style={{ background: "rgba(0,0,0,0.75)", backdropFilter: "blur(6px)" }}
-             onClick={closeForm}>
+     style={{ background: "rgba(0,0,0,0.75)", backdropFilter: "blur(6px)" }}>
           <div className="w-full max-w-md rounded-2xl border p-6"
                style={{ background: "#13131f", borderColor: "rgba(255,255,255,0.1)" }}
                onClick={e => e.stopPropagation()}>
